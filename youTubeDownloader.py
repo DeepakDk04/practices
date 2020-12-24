@@ -96,21 +96,16 @@ def chooseStream(availableStream_Itags):
 
 
 def downloadVedio(availableStream, itag):
-    vedio_ID = URL.split('?v=')[1]
+    vedio_ID = URL.split('?v=')[1]  # extract vedio id from URL Query
     print("Downloading...")
     v = availableStream.get_by_itag(itag)
-    if v is not None:
+    if v:
         v.download(output_path="../YouTubeVedios/Downloads",
                    filename=f"YouTubeVedio-{vedio_ID}")
     else:
         print("Error, Can't Initiate Download Process")
     print("Download Complete")
-# print("process started...")
-# print()
-# v.download(output_path="../YouTubeVedios/Downloads", filename="vedioFile")
-
-# print("Download complete")
 
 
-getLink()
-test_vedio_link = "https://www.youtube.com/watch?v=l73dA-A0Si4"
+getLink()  # only works with YOUTUBE Vedio links Not suitable for PLAYLIST links
+test_vedio_link = "https://www.youtube.com/watch?v=l73dA-A0Si4"  # tested OK
