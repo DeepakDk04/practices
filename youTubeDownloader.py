@@ -3,12 +3,18 @@ from easy_table import EasyTable
 
 
 def getLink():
+    print("\n\n")
     url = input("YouTube Vedio URL >>> ")
+    print("\n\n")
     try:
         vedio = YouTube(url)
         availableStream = vedio.streams
     except Exception as e:
         print(e)
+        print("Can't get vedio from this Url.")
+    print("\n\n")
+    print("Loading...")
+    print("\n\n")
     getStreams(availableStream)
 
 
