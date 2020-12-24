@@ -1,25 +1,37 @@
 from pytube import YouTube
+from easy_table import EasyTable
 
 
-url = "https://www.youtube.com/watch?v=LcF6ut-1M94"
-# def onProcess():
-#     print("Processed--")
-
-# def onComplete():
-#     print("Completed--")
-
-# vedio = YouTube(url,on_complete_callback=onComplete(),on_progress_callback=onProcess())
-vedio = YouTube(url)
-availableStream = vedio.streams
+def getLink():
+    url = input("YouTube Vedio URL >>> ")
+    try:
+        vedio = YouTube(url)
+        availableStream = vedio.streams
+    except Exception as e:
+        print(e)
+    getStreams(availableStream)
 
 
+def getStreams(availableStream):
+    StreamList = []
+    for stream in availableStream:
+        print("Whole Stream ", list(stream))
+        stream_info = {}
+        stream_info["   Itag   "] = stream.itag
+        stream_info[" MimeType "] = stream.mime_type
+        stream_info["   Abr    "] = stream.abr
+        stream_info["   Type   "] = stream.type
+        stream_info["   Fps    "] = stream.fps
+        print("Taken Stream ", stream_info)
+        StreamList.append(stream_info)
+    streamTableDisplay(StreamList)
+    # vedio_Stream_Info_Title = ["itag", "mimetype", "abr", "type", "fps"]
+    # vedio_Stream_Info = [vedio_Stream_Info_Title]
 
-vedio_Stream_Info_Title = ["itag","mimetype","abr","type","fps"]
-vedio_Stream_Info = [vedio_Stream_Info_Title]
-
-for stream in availableStream:
-    stream_Info = [stream.itag,stream.mime_type,stream.abr,stream.type,stream.fps]
-    vedio_Stream_Info.append(stream_Info)
+    # for stream in availableStream:
+    #     stream_Info = [stream.itag, stream.mime_type,
+    #                 stream.abr, stream.type, stream.fps]
+    #     vedio_Stream_Info.append(stream_Info)
     # add table format here using table library --pip install easy-table let user choose fps
 
     # print()
@@ -31,12 +43,29 @@ for stream in availableStream:
     # print("fps", stream.fps)
     # print()
     # print(stream.res)
-for option in vedio_Stream_Info:
-    print(option)
+    # for option in vedio_Stream_Info:
+    #     print(option)
 
-v = availableStream.get_by_itag(22)
-print("process started...")
-print()
-v.download(output_path="../YouTubeVedios/Downloads", filename="vedioFile")
 
-print("Download complete")
+# table_data should be list of key value pairs  [
+#     {"id": 1, "name": "Tim", "age": 33},
+#     {"id": 2, "name": "Bob", "age": 28},
+#     {"id": 3, "name": "John", "age": 41}
+#   ]
+
+def streamTableDisplay(table_data):
+    table = EasyTable("Available Stream Types")
+    table.setCorners("/", "\\", "\\", "/")
+    table.setOuterStructure("|", "-")
+    table.setInnerStructure("|", "-", "+")
+    table.setData(table_data)
+    print()
+    table.displayTable()
+
+
+# v = availableStream.get_by_itag(22)
+# print("process started...")
+# print()
+# v.download(output_path="../YouTubeVedios/Downloads", filename="vedioFile")
+
+# print("Download complete")
