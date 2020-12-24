@@ -11,17 +11,25 @@ def getLink():
         print(e)
     getStreams(availableStream)
 
+def getStreamTag(stream,attribute):
+    try:
+        value = stream.attribute
+    except Exception:
+        value = "Not Available"
+    return value
 
 def getStreams(availableStream):
     StreamList = []
     for stream in availableStream:
-        print("Whole Stream ", list(stream))
+        print("Whole Stream ", stream)
         stream_info = {}
-        stream_info["   Itag   "] = stream.itag
-        stream_info[" MimeType "] = stream.mime_type
-        stream_info["   Abr    "] = stream.abr
-        stream_info["   Type   "] = stream.type
-        stream_info["   Fps    "] = stream.fps
+        stream_info["   Itag   "] = getStreamTag(stream,"itag")
+        stream_info[" MimeType "] = getStreamTag(stream,"mime_type")
+        stream_info["   Abr    "] = getStreamTag(stream,"abr")
+        stream_info["   Res    "] = getStreamTag(stream,"res")
+        stream_info[" Progressive "] = getStreamTag(stream,"progressive")
+        stream_info["   Type   "] = getStreamTag(stream,"type")
+        stream_info["   Fps    "] = getStreamTag(stream,"fps")
         print("Taken Stream ", stream_info)
         StreamList.append(stream_info)
     streamTableDisplay(StreamList)
@@ -69,3 +77,6 @@ def streamTableDisplay(table_data):
 # v.download(output_path="../YouTubeVedios/Downloads", filename="vedioFile")
 
 # print("Download complete")
+
+
+getLink()
