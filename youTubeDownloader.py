@@ -4,8 +4,7 @@ from easy_table import EasyTable
 
 def getLink():
     print("\n\n")
-    url = input("YouTube Vedio URL >>> ")
-    print("\n\n")
+    url = input("     YouTube Vedio URL >>> ")
     try:
         vedio = YouTube(url)
         availableStream = vedio.streams
@@ -13,7 +12,7 @@ def getLink():
         print(e)
         print("Can't get vedio from this Url.")
     print("\n\n")
-    print("Loading...")
+    print("\t\tLoading...")
     print("\n\n")
     getStreams(availableStream)
 
@@ -44,12 +43,12 @@ def getStreams(availableStream):
     StreamList = []
     for stream in availableStream:
         stream_info = {}
-        stream_info["   Itag   "] = getStreamTag(stream, "itag")
-        stream_info["   Fps    "] = getStreamTag(stream, "fps")
-        stream_info["   Abr    "] = getStreamTag(stream, "abr")
-        stream_info[" MimeType "] = getStreamTag(stream, "mime_type")
+        stream_info["    ID    "] = getStreamTag(stream, "itag")
         stream_info["   Type   "] = getStreamTag(stream, "type")
         stream_info[" Resolution "] = getStreamTag(stream, "res")
+        stream_info["  Format  "] = getStreamTag(stream, "mime_type")
+        stream_info["   FPS    "] = getStreamTag(stream, "fps")
+        stream_info["   Abr    "] = getStreamTag(stream, "abr")
         StreamList.append(stream_info)
     streamTableDisplay(StreamList)
 
@@ -62,6 +61,7 @@ def streamTableDisplay(table_data):
     table.setData(table_data)
     print()
     table.displayTable()
+    print()
 
 
 # v = availableStream.get_by_itag(22)
