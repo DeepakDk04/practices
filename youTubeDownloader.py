@@ -11,55 +11,42 @@ def getLink():
         print(e)
     getStreams(availableStream)
 
-def getStreamTag(stream,attribute):
+
+def getStreamTag(streamObject, attribute):
     try:
-        value = stream.attribute
-    except Exception:
+        if attribute == 'itag':
+            value = streamObject.itag
+        elif attribute == 'mime_type':
+            value = streamObject.mime_type
+        elif attribute == 'abr':
+            value = streamObject.abr
+        elif attribute == 'res':
+            value = streamObject.resolution
+        elif attribute == 'type':
+            value = streamObject.type
+        elif attribute == 'fps':
+            value = streamObject.fps
+        else:
+            value = ''
+    except Exception as e:
+        print(e)
         value = "Not Available"
     return value
+
 
 def getStreams(availableStream):
     StreamList = []
     for stream in availableStream:
-        print("Whole Stream ", stream)
         stream_info = {}
-        stream_info["   Itag   "] = getStreamTag(stream,"itag")
-        stream_info[" MimeType "] = getStreamTag(stream,"mime_type")
-        stream_info["   Abr    "] = getStreamTag(stream,"abr")
-        stream_info["   Res    "] = getStreamTag(stream,"res")
-        stream_info[" Progressive "] = getStreamTag(stream,"progressive")
-        stream_info["   Type   "] = getStreamTag(stream,"type")
-        stream_info["   Fps    "] = getStreamTag(stream,"fps")
-        print("Taken Stream ", stream_info)
+        stream_info["   Itag   "] = getStreamTag(stream, "itag")
+        stream_info["   Fps    "] = getStreamTag(stream, "fps")
+        stream_info["   Abr    "] = getStreamTag(stream, "abr")
+        stream_info[" MimeType "] = getStreamTag(stream, "mime_type")
+        stream_info["   Type   "] = getStreamTag(stream, "type")
+        stream_info[" Resolution "] = getStreamTag(stream, "res")
         StreamList.append(stream_info)
     streamTableDisplay(StreamList)
-    # vedio_Stream_Info_Title = ["itag", "mimetype", "abr", "type", "fps"]
-    # vedio_Stream_Info = [vedio_Stream_Info_Title]
 
-    # for stream in availableStream:
-    #     stream_Info = [stream.itag, stream.mime_type,
-    #                 stream.abr, stream.type, stream.fps]
-    #     vedio_Stream_Info.append(stream_Info)
-    # add table format here using table library --pip install easy-table let user choose fps
-
-    # print()
-    # print("itag", stream.itag)
-    # print("mimetype", stream.mime_type)
-    # print("abr", stream.abr)
-    # # print(stream.progressive)
-    # print("type", stream.type)
-    # print("fps", stream.fps)
-    # print()
-    # print(stream.res)
-    # for option in vedio_Stream_Info:
-    #     print(option)
-
-
-# table_data should be list of key value pairs  [
-#     {"id": 1, "name": "Tim", "age": 33},
-#     {"id": 2, "name": "Bob", "age": 28},
-#     {"id": 3, "name": "John", "age": 41}
-#   ]
 
 def streamTableDisplay(table_data):
     table = EasyTable("Available Stream Types")
