@@ -4,7 +4,7 @@ from easy_table import EasyTable
 
 def getLink():
     print("\n\n")
-    url = input("     YouTube Vedio URL >>> ")
+    url = input("YouTube Vedio URL >>> ")
     try:
         vedio = YouTube(url)
         availableStream = vedio.streams
@@ -12,7 +12,7 @@ def getLink():
         print(e)
         print("Can't get vedio from this Url.")
     print("\n\n")
-    print("\t\tLoading...")
+    print("\tLoading...")
     print("\n\n")
     getStreams(availableStream)
 
