@@ -38,22 +38,27 @@ def getStreamTag(streamObject, attribute):
         value = "Not Available"
     return str(value)
 
+def getStream(stream):
+    stream_info = {}
+    stream_info["    ID    "] = getStreamTag(stream, "itag")
+    stream_info["   Type   "] = getStreamTag(stream, "type")
+    stream_info[" Resolution "] = getStreamTag(stream, "res")
+    stream_info["  Format  "] = getStreamTag(stream, "mime_type")
+    stream_info["   FPS    "] = getStreamTag(stream, "fps")
+    stream_info["   Abr    "] = getStreamTag(stream, "abr")
+    return stream_info
+
 
 def getStreams(availableStream):
     StreamList = []
     availableStream_Itags = []
     for stream in availableStream:
-        stream_info = {}
-        stream_info["    ID    "] = getStreamTag(stream, "itag")
-        stream_info["   Type   "] = getStreamTag(stream, "type")
-        stream_info[" Resolution "] = getStreamTag(stream, "res")
-        stream_info["  Format  "] = getStreamTag(stream, "mime_type")
-        stream_info["   FPS    "] = getStreamTag(stream, "fps")
-        stream_info["   Abr    "] = getStreamTag(stream, "abr")
+        stream_info = getStream(stream)
         StreamList.append(stream_info)
         # used later to select the file to download
         availableStream_Itags.append(stream_info["    ID    "])
     streamTableDisplay(StreamList)
+    choice = chooseStream(availableStream_Itags)
 
 
 def streamTableDisplay(table_data):
@@ -67,16 +72,16 @@ def streamTableDisplay(table_data):
     print()
 
 
-def chooseStream(streamList):
+def chooseStream(availableStream_Itags):
     print("Choose Any ID from above Table to Download it\n")
     print("Enter ID to Download (or) Enter 0 to Cancel")
     user_choice = str(input("Enter your Choice >>> "))
     # errror cases
     if user_choice == 0:
         return "cancel"
-    if user_choice not in streamList:
+    if user_choice not in availableStream_Itags:
         print("Invalid Choice, Please enter a Vaid One")
-        chooseStream(streamList)
+        chooseStream(availableStream_Itags)
     # success cases
     return user_choice
 
