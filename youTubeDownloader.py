@@ -1,12 +1,15 @@
 from pytube import YouTube
 from easy_table import EasyTable
 
+URL = ''
+
 
 def getLink():
+    global URL
     print("\n\n")
-    url = input("YouTube Vedio URL >>> ")
+    URL = input("YouTube Vedio URL >>> ")
     try:
-        vedio = YouTube(url)
+        vedio = YouTube(URL)
         availableStream = vedio.streams
     except Exception as e:
         print(e)
@@ -38,6 +41,7 @@ def getStreamTag(streamObject, attribute):
         value = "Not Available"
     return str(value)
 
+
 def getStream(stream):
     stream_info = {}
     stream_info["    ID    "] = getStreamTag(stream, "itag")
@@ -54,11 +58,16 @@ def getStreams(availableStream):
     availableStream_Itags = []
     for stream in availableStream:
         stream_info = getStream(stream)
+        # availableStream_Itags used later to select the file to download
+        availableStream_Itags.append(stream_info.get("    ID    ", None))
         StreamList.append(stream_info)
-        # used later to select the file to download
-        availableStream_Itags.append(stream_info["    ID    "])
     streamTableDisplay(StreamList)
     choice = chooseStream(availableStream_Itags)
+    if choice == "cancel":
+        print("Process Cancelled")
+        return None
+    else:
+        downloadVedio(availableStream, choice)
 
 
 def streamTableDisplay(table_data):
@@ -80,12 +89,22 @@ def chooseStream(availableStream_Itags):
     if user_choice == 0:
         return "cancel"
     if user_choice not in availableStream_Itags:
-        print("Invalid Choice, Please enter a Vaid One")
+        print("Invalid Choice, Please enter a Vaid One\n\n")
         chooseStream(availableStream_Itags)
     # success cases
     return user_choice
 
-# v = availableStream.get_by_itag(22)
+
+def downloadVedio(availableStream, itag):
+    vedio_ID = URL.split('?v=')[1]
+    print("Downloading...")
+    v = availableStream.get_by_itag(itag)
+    if v is not None:
+        v.download(output_path="../YouTubeVedios/Downloads",
+                   filename=f"YouTubeVedio-{vedio_ID}")
+    else:
+        print("Error, Can't Initiate Download Process")
+    print("Download Complete")
 # print("process started...")
 # print()
 # v.download(output_path="../YouTubeVedios/Downloads", filename="vedioFile")
