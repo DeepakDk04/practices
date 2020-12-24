@@ -36,11 +36,12 @@ def getStreamTag(streamObject, attribute):
     except Exception as e:
         print(e)
         value = "Not Available"
-    return value
+    return str(value)
 
 
 def getStreams(availableStream):
     StreamList = []
+    availableStream_Itags = []
     for stream in availableStream:
         stream_info = {}
         stream_info["    ID    "] = getStreamTag(stream, "itag")
@@ -50,6 +51,8 @@ def getStreams(availableStream):
         stream_info["   FPS    "] = getStreamTag(stream, "fps")
         stream_info["   Abr    "] = getStreamTag(stream, "abr")
         StreamList.append(stream_info)
+        # used later to select the file to download
+        availableStream_Itags.append(stream_info["    ID    "])
     streamTableDisplay(StreamList)
 
 
@@ -64,6 +67,19 @@ def streamTableDisplay(table_data):
     print()
 
 
+def chooseStream(streamList):
+    print("Choose Any ID from above Table to Download it\n")
+    print("Enter ID to Download (or) Enter 0 to Cancel")
+    user_choice = str(input("Enter your Choice >>> "))
+    # errror cases
+    if user_choice == 0:
+        return "cancel"
+    if user_choice not in streamList:
+        print("Invalid Choice, Please enter a Vaid One")
+        chooseStream(streamList)
+    # success cases
+    return user_choice
+
 # v = availableStream.get_by_itag(22)
 # print("process started...")
 # print()
@@ -73,3 +89,4 @@ def streamTableDisplay(table_data):
 
 
 getLink()
+test_vedio_link = "https://www.youtube.com/watch?v=l73dA-A0Si4"
