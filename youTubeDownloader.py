@@ -42,7 +42,7 @@ def chooseStream(availableStream_Itags):
         return "cancel"
     if user_choice not in availableStream_Itags:
         print("Invalid Choice, Please enter a Vaid One\n\n")
-        chooseStream(availableStream_Itags)
+        return chooseStream(availableStream_Itags)
     # success cases
     return user_choice
 
