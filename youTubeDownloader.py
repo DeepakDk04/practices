@@ -10,14 +10,15 @@ def downloadVedio(availableStream, itag):
     filename = f"YouTubeVedio-{vedio_ID}"
     output_path = "../YouTubeVedios/Downloads"
     print("Downloading...")
-    v = availableStream.get_by_itag(itag)#load the stream selected by user
+    v = availableStream.get_by_itag(itag)  # load the stream selected by user
     if v:
-        #check and download, if the stream is available
+        # check and download, if the stream is available
         v.download(output_path=output_path,
                    filename=filename)
+        return True #return true if downloaded successfully.
     else:
         print("Error, Can't Initiate Download Process")
-    print("Download Complete")
+    return False#return defaults to false
 
 
 def streamTableDisplay(table_data):
@@ -35,9 +36,9 @@ def chooseStream(availableStream_Itags):
     # user choice for which stream to be downloaded.
     print("Choose Any ID from above Table to Download it\n")
     print("Enter ID to Download (or) Enter 0 to Cancel")
-    user_choice = str(input("Enter your Choice >>> "))
+    user_choice = input("Enter your Choice >>> ")
     # errror cases
-    if user_choice == 0:
+    if str(user_choice) == '0':
         return "cancel"
     if user_choice not in availableStream_Itags:
         print("Invalid Choice, Please enter a Vaid One\n\n")
@@ -64,7 +65,7 @@ def getStreamTag(streamObject, attribute):
         else:
             value = ''
     except Exception as e:
-        # print(e)
+        print(e)
         value = "Not Available"
     return str(value)
 
@@ -96,7 +97,9 @@ def getStreams(availableStream):
         print("Process Cancelled")
         return None
     else:
-        downloadVedio(availableStream, choice)
+        is_vedio_Downloaded = downloadVedio(availableStream, choice)
+        if is_vedio_Downloaded:
+            print("Download Complete")
 
 
 def getLink():
