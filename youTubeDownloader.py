@@ -5,7 +5,8 @@ URL = ''
 
 
 def downloadVedio(availableStream, itag):
-    # extract vedio id from URL Query for unique filename.
+    global URL
+    # extract vedio id from URL Query to create unique filename.
     vedio_ID = URL.split('?v=')[1]
     filename = f"YouTubeVedio-{vedio_ID}"
     output_path = "../YouTubeVedios/Downloads"
@@ -15,8 +16,8 @@ def downloadVedio(availableStream, itag):
         # check and download, if the stream is available
         v.download(output_path=output_path,
                    filename=filename)
-        return True #return true if downloaded successfully.
-    return False#return defaults to false
+        return True  # if downloaded successfully.
+    return False  # defaults to false
 
 
 def streamTableDisplay(table_data):
@@ -93,7 +94,6 @@ def getStreams(availableStream):
     choice = chooseStream(availableStream_Itags)
     if choice == "cancel":
         print("Process Cancelled")
-        return None
     else:
         is_vedio_Downloaded = downloadVedio(availableStream, choice)
         if is_vedio_Downloaded:
@@ -107,9 +107,9 @@ def getLink():
     print("\n\n")
     URL = input("YouTube Vedio URL >>> ")
     try:
-        # extract stream object from the vedio object to download in file stream
         vedio = YouTube(URL)
         availableStream = vedio.streams
+        # extract stream object from the vedio object to download in file stream
     except Exception as e:
         print("Error!")
         print(e)
