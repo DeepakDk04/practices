@@ -1,5 +1,5 @@
-from pytube import YouTube
-from easy_table import EasyTable
+from pytube import YouTube  # pip install pytube
+from easy_table import EasyTable  # pip install easy_table
 
 URL = ''
 
