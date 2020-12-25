@@ -16,8 +16,6 @@ def downloadVedio(availableStream, itag):
         v.download(output_path=output_path,
                    filename=filename)
         return True #return true if downloaded successfully.
-    else:
-        print("Error, Can't Initiate Download Process")
     return False#return defaults to false
 
 
@@ -100,6 +98,8 @@ def getStreams(availableStream):
         is_vedio_Downloaded = downloadVedio(availableStream, choice)
         if is_vedio_Downloaded:
             print("Download Complete")
+        else:
+            print("Error, Can't Initiate Download Process")
 
 
 def getLink():
